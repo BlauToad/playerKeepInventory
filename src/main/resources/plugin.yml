@@ -1,0 +1,9 @@
+name: playerKeepInventory
+version: '${version}'
+main: de.blautoad.playerkeepinventory.Main
+api-version: 1.20
+authors: [ BlauToad ]
+description: Each Player can toggle if they want KeepInventory enabled or not
+commands:
+  keepinventory:
+    description: Toggles KeepInventory
