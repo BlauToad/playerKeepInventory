@@ -13,7 +13,12 @@ public class tab implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> completions = null;
         if (args.length == 1) {
-            String[] l = new String[]{"true", "false", "toggle"};
+            String[] l = null;
+            if (sender.isOp()) {
+                l = new String[] { "true", "false", "toggle", "check", "default", "reload" };
+            } else {
+                l = new String[] { "true", "false", "toggle" };
+            }
             String input = args[0].toLowerCase();
             completions = new ArrayList<>();
             for (String s : l) {
@@ -25,6 +30,39 @@ public class tab implements TabCompleter {
             } else {
                 Collections.sort(completions);
             }
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("default")) {
+            String[] l = null;
+            if (sender.isOp()) {
+                l = new String[] { "set", "get" };
+            }
+            String input = args[1].toLowerCase();
+            completions = new ArrayList<>();
+            for (String s : l) {
+                if (s.startsWith(input))
+                    completions.add(s);
+            }
+            if (completions.size() == 0) {
+                completions.add("get");
+            } else {
+                Collections.sort(completions);
+            }
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("default") && args[1].equalsIgnoreCase("set")) {
+            String[] l = null;
+            if (sender.isOp()) {
+                l = new String[] { "true", "false" };
+            }
+            String input = args[2].toLowerCase();
+            completions = new ArrayList<>();
+            for (String s : l) {
+                if (s.startsWith(input))
+                    completions.add(s);
+            }
+            if (completions.size() == 0) {
+                for (String s : l) {
+                    completions.add(s);
+                }
+            }
+            Collections.sort(completions);
         }
         return completions;
     }

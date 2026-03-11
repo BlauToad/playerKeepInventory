@@ -24,6 +24,10 @@ public class deathListener implements Listener {
             byte keepInventory = 0;
             if (pdc.has(nk, PersistentDataType.BYTE)) {
                 keepInventory = pdc.get(nk, PersistentDataType.BYTE);
+            }else{
+                if(de.blautoad.playerkeepinventory.Main.getKeepInventoryDefaultState()){
+                    keepInventory = 1;
+                }
             }
             if (keepInventory == 1) {
                 event.setKeepInventory(true);
