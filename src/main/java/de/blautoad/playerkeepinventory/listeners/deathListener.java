@@ -12,7 +12,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class deathListener implements Listener {
     private final NamespacedKey nk;
 
-    public deathListener(NamespacedKey nk){
+    public deathListener(NamespacedKey nk) {
         this.nk = nk;
     }
 
@@ -24,16 +24,18 @@ public class deathListener implements Listener {
             byte keepInventory = 0;
             if (pdc.has(nk, PersistentDataType.BYTE)) {
                 keepInventory = pdc.get(nk, PersistentDataType.BYTE);
-            }else{
-                if(de.blautoad.playerkeepinventory.Main.getKeepInventoryDefaultState()){
+            } else {
+                if (de.blautoad.playerkeepinventory.Main.getKeepInventoryDefaultState()) {
                     keepInventory = 1;
                 }
             }
             if (keepInventory == 1) {
-                event.setKeepInventory(true);
-                event.setKeepLevel(true);
-                event.setDroppedExp(0);
-                event.getDrops().removeAll(event.getDrops());
+                if (!p.getWorld().getGameRuleValue(org.bukkit.GameRule.KEEP_INVENTORY)) {
+                    event.setKeepInventory(true);
+                    event.setKeepLevel(true);
+                    event.setDroppedExp(0);
+                    event.getDrops().removeAll(event.getDrops());
+                }
             }
         }
     }
